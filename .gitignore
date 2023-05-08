@@ -1,4 +1,5 @@
 papers/
 .idea/
 .code/
-*.gz
+*.
+data/
