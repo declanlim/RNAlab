@@ -6,7 +6,10 @@ def attribute_graph(sample_dict):
     attribute_count = {}
 
     for value in sample_dict.values():
-        num_attrs = len(value)
+        if value is None:
+            num_attrs = 0
+        else:
+            num_attrs = len(value)
         if num_attrs in attribute_count:
             attribute_count[num_attrs] += 1
         else:
@@ -26,4 +29,20 @@ def matches_graph(sample_dict):
     bar_data = {'match': ['Match', 'No match'], 'count': [match_count, no_match_count], 'label': [match_count, no_match_count]}
     fig = px.bar(bar_data, x='match', y='count', text='label')
     fig.update_layout(title='Number of Samples Matched to Brenda', xaxis=dict(title='Match'), yaxis=dict(title='Count'))
+    fig.show()
+
+
+def attribute_name_graph(attribute_dict):
+    # plot a graph of the counts of each attribute name that the BRENDA term was mapped to
+    # attribute_dict has the format {biosample_id, attirbute_name}
+
+    attribute_count = {}
+    for value in attribute_dict.values():
+        if value in attribute_count:
+            attribute_count[value] += 1
+        else:
+            attribute_count[value] = 1
+    bar_data = {'attribute': list(attribute_count.keys()), 'count': list(attribute_count.values()), 'label': list(attribute_count.values())}
+    fig = px.bar(bar_data, x='attribute', y='count', text='label')
+    fig.update_layout(title='Counts for found attributes', xaxis=dict(title='Attribute'), yaxis=dict(title='Count'))
     fig.show()
